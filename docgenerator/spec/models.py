@@ -395,6 +395,10 @@ class JSONObject(models.Model):
     schema = models.ForeignKey(XMLSchema, on_delete=models.CASCADE, default=1)
     object_type = models.SmallIntegerField(choices=OBJECT_TYPE_CHOICES)
 
+    # For OBJECT_TYPE_LITERAL_STRING, this contains the string.
+    # For other object_types, this is a prose description displayed in the docs.
+    description = models.TextField(blank=True)
+
     class Meta:
         db_table = 'json_objects'
         verbose_name = 'JSON object'
@@ -411,6 +415,9 @@ class JSONObject(models.Model):
 
     def is_array(self):
         return self.object_type == JSONObject.OBJECT_TYPE_ARRAY
+
+    def is_literal_string(self):
+        return self.object_type == JSONObject.OBJECT_TYPE_LITERAL_STRING
 
     def get_child_relationships(self):
         return list(JSONObjectRelationship.objects.filter(parent=self).order_by('child_key'))
