@@ -204,6 +204,10 @@ def get_augmented_example_json_inner(current_url, json_data, object_def=None, in
             f'<span class="tag">{json.dumps(json_data)}</span>',
             False
         ])
+    elif isinstance(json_data, (dict, list)) and not json_data:
+        # Special case: For empty dicts or empty lists, use "{}" and "[]"
+        # rather than splitting the opening/closing symbols over two lines.
+        result.append([indent_level, json.dumps(json_data), False])
     elif isinstance(json_data, dict):
         child_rels = {r.child_key: r for r in object_def.get_child_relationships()}
         result.append([indent_level, '{', False])
@@ -236,11 +240,10 @@ def get_augmented_example_json_inner(current_url, json_data, object_def=None, in
             ))
         result.append([indent_level, ']', False])
     else:
-        result.append([
-            indent_level,
-            f'<a class="tag" href="{get_relative_url(current_url, object_def.get_absolute_url())}">{json.dumps(json_data)}</a>',
-            False
-        ])
+        value = json.dumps(json_data)
+        if object_def.has_docs_page():
+            value = f'<a class="tag" href="{get_relative_url(current_url, object_def.get_absolute_url())}">{value}</a>'
+        result.append([indent_level, value, False])
     if add_comma:
         result[-1][1] += ','
     return result
