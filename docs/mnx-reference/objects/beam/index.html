@@ -28,13 +28,12 @@
     <nav class="sidenav">
         <ul>
 <li><a href="../../../">Home</a></li>
-<li><a href="../../">Reference</a>
+<li><a href="../">Reference</a>
     <ul>
     <li><a href="../">Objects</a></li>
     <li><a href="../../examples/">Example documents</a></li>
     </ul>
 </li>
-<li><a href="../../../concepts/">Concepts in MNX</a></li>
 <li><a href="../../../comparisons/musicxml/">MNX and MusicXML</a></li>
 </ul>
     </nav>
@@ -51,6 +50,10 @@
 
 <p><b>Type:</b> Dictionary</p>
 
+
+<p>Describes a single beam.</p>
+
+<p>For music that uses secondary beams (i.e., sixteenth notes or smaller), the secondary beams are encoded explicitly, within <code>"inner"</code>.</p>
 
 
 
@@ -78,7 +81,7 @@
         
     </td>
     <td>Yes</td>
-    <td></td>
+    <td>IDs of the events that comprise this beam — in order by their position in the beam.</td>
 </tr>
 
 <tr>
@@ -106,7 +109,7 @@
         
     </td>
     <td>No</td>
-    <td></td>
+    <td>Secondary beams within this beam.</td>
 </tr>
 
 
